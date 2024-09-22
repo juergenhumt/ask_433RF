@@ -1,0 +1,31 @@
+The project implements a very simple data exchang via a 433MHz data link. The programs are based on the examples in the RadioHead library. It has been tested using two arduino mega 2560 baords and one arudino mega 2560 for the transmitter and one arduino micro for the receiver. An attempt to use the micro as transmitter and the mega as receiver has not been successful.
+
+Open a command window and enter: ls -l /dev/ttyACM*
+If no ttyACM port is listed proceed with the steps below. If ttyACM ports are listed you will have to adjust the port designations below, since the connections of your arduino boards will be registered under different names by the operating system.
+
+One crucial line is the tranmitter/receiver initialization
+RH_ASK driver(2000, 5, 0, 0);
+The first Parameter is the tranmission speed, the second one is the pin number on the board to which the data line of the receiver ist attached (here it is pin #5) and the third one is the pin number of the data line for the tranmitter, which is pin #10. Parameter 4 is not used here.
+Wire your hardware according to the pin numbers above.
+
+
+Program startup:
+- start your arduino IDE and load ask_transmitter_ino_2560_0
+- configure the correct board (mega 2560) in you IDE
+  under Tools, Board
+- plug in the USB connector to the transmitter,
+  the USB port will be registered as ttyACM0
+- check, that under Tools, Port ttyACM0 is selected
+
+- plug in the USB connector to the receiver
+  the USB port will be registered as ttyACM1
+- configure the correct board and port in your IDE 
+
+- first upload the transmitter program to the board on 
+  ttyACM0 then the receiver to ttyACM1
+- in a command window start the serial python reader program,
+  enter: python rdSerASKone.py
+  the program will start reading the data sent by the 
+  433 receiver and display them as hex values, so the 
+  integer 17 will appear as 31 37 in the output
+
